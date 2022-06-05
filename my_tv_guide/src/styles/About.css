@@ -1,0 +1,15 @@
+.about-us{
+    color: var(--primary-color);
+    padding: 100px;
+    display: flex;
+    flex-direction: column;
+}
+
+.about-us .about-text{
+    border: solid 2px var(--primary-color);
+    padding: 20px;
+    width: 70%;
+    align-self: center;
+    font-weight: bold;
+    border-radius: 10px;
+}
