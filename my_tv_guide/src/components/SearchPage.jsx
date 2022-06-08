@@ -3,35 +3,25 @@ import { Movies } from "./Movies";
 import { Search } from "./Search";
 
 import "../styles/SearchPage.css";
+import useMovies from "../hooks/useMovies";
+import ShowContext from "../context/ShowContext";
 
 export const SearchPage = () => {
   const [movie, setMovie] = useState("");
   const [movies, setMovies] = useState([]);
+  const { showMovies, findMovie } = useMovies();
 
   useEffect(() => {
-    fetch(`https://api.tvmaze.com/search/shows?q=${movie}`)
-      .then((response) => {
-        return response.json();
-      })
-      .then((movieInfo) => {
-        const movieData = movieInfo.map((info) => {
-          return {
-            title: info.show.name,
-            image: info?.show?.image?.medium,
-            genres: info.show.genres,
-            id: info.show.id,
-            languaje: info.show.languaje,
-            summary: info.show.summary,
-          };
-        });
-        setMovies(movieData);
-      });
+    setMovies(showMovies(movie));
   }, [movie]);
 
   return (
     <div className="search-page">
       <Search setMovie={setMovie} />
-      <Movies movies={movies} />
+      <ShowContext.Provider value={{showMovies,findMovie}}>
+        <Movies movies={movies} />
+      </ShowContext.Provider>
+      
     </div>
   );
 };
